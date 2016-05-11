@@ -1,0 +1,699 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     27805,        690]
+NotebookOptionsPosition[     25428,        609]
+NotebookOutlinePosition[     25772,        624]
+CellTagsIndexPosition[     25729,        621]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["CS 371: Final Project Report: Rocket Launch Simulation", "Title",
+ CellChangeTimes->{{3.6705436489702897`*^9, 3.6705436627919073`*^9}, {
+  3.671932844561097*^9, 3.671932856885119*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Robert Bosh and Levi Wilson", "Chapter",
+ CellChangeTimes->{{3.670543671432043*^9, 3.670543677799406*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["1) How to Run Code (Needs Updated)", "Section",
+ CellChangeTimes->{{3.6705437513600492`*^9, 3.6705437631398716`*^9}, {
+  3.671933258679425*^9, 3.6719332627822323`*^9}}],
+
+Cell["\<\
+To run the program follow the following steps:
+
+1) Evaluate the Notebook
+
+2) Open the Interface Section and Temporary Interface subsection
+
+3) Evaluate the manipulate once more in order to start the program
+
+Now that the program is initialized you can begin to change program values. \
+The initial values are setup to run for an example single stage rocket \
+launch. You can edit all of the values, but the primary control is the slider \
+marked \[OpenCurlyDoubleQuote]Time\[CloseCurlyDoubleQuote] which controls the \
+progression of the program. Below the sliders is the temporary display setup \
+which has value readouts and a simulation. Later the simulation will have \
+large dots marking the position of the rocket and launchpad after they become \
+too small to see.\
+\>", "Text",
+ CellChangeTimes->{{3.6705479201833563`*^9, 3.6705482046357985`*^9}}]
+}, Open  ]],
+
+Cell["2) Project Description", "Section",
+ CellChangeTimes->{{3.6705482171940546`*^9, 3.670548218008136*^9}, {
+  3.6705482638387184`*^9, 3.670548270986433*^9}, {3.6719328642951317`*^9, 
+  3.6719328747783504`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["3) Explaination of Formulas (Needs Updated)", "Section",
+ CellChangeTimes->{{3.6705487901823473`*^9, 3.670548827051034*^9}, 
+   3.6705925841602736`*^9, {3.6719329096756115`*^9, 3.6719329100656123`*^9}, {
+   3.6719330914159307`*^9, 3.671933101134748*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  GraphicsBox[
+   TagBox[RasterBox[CompressedData["
+1:eJzt3XlQVdcdB/BM2z+ctCbRpJKgVbHigloxRFHEDURrUCEIogIGkE1xAxF4
+8FgejweiIPAARQURUECWh7gGN+SpNS6oNUbFDcykTTFJndpp1P7z7TkXr1Vk
+jfHdc/F8Z46Kw8hnLr97zve9Ga4m3quc/H711ltvrelBfnHyCpsWHOylmPcb
+8oGNIsTX+9fkD38jayRZ9C/Bw8PDw9Mt8l3jPdRfvS41o9PRZeWisPIUHj1+
+LDWlw3xbX491/iFI23kO3zT9IDWnw1w4VA2NvwLanXWoPsf2TPz08N/QBixH
+4moN0vO+RPbe82j657+kZrWZc/sPQDl7HpLCUon3LLSVl/HFl5elZrWanx4+
+xEZPb8S6emFDRCbSc/+CjMob2FRZg6YfH0jNeyln9+9D2FRbqBcHYoNyM9K3
+6on3FtIrTuHg6XNS814IvbbJHh6InDkb8UuCsCF6C9I2HUWG7ja0uvPILK/G
+P374UWrms9yqu4A1VtaInuuChAAFkmNzkJZ1GBnlt8k1/ivSympw9c49qZnP
+UqSKQ9gUG8Q6uyNxeTSSVduRllmNjNJ6ZOy5TmbiNAoO6fH4yROpqcL5EDl9
+BiKm/xmqhUuQuDIOyXF5SMs4BG3JNWRU3SEzcRYbSw/jq9sNUnOxS6VCyMTJ
+UH7qINxr64ISiHcH0rTEu+sKub4NZCbqkFZei/wDx/BIwmv8bf0NRNhOJ7Ng
+i2jH+Yj3DkJSSBJS1AXEexDawkvEe0+YYbpPpBQfwJWbtyXz7lLFYM0Ea2EW
+Yl08oPFbi6TQZKTEFzZ7C+qI9Rti/prMxBmklh3Djn3V5BobvgfRa6uwscFa
+6ylQzpojzG7C0gisD09FimZnszf/PNnTGomX3He6c0irqEVyURWu1N80qPXB
+gwfIDFqJYEsrhJNZiJrjhDiPACQERmG9Ip14dxHvAWhJh8iouEvuObKv6eqE
+maD33eaScuHfMFSKCgvgNmIEQiZMgmL6TMR8tgBqzxVIXBFLzuIMpCQUIS19
+P7TbyZlcfod4G4QZpjORVl4D9dadUERFG8RKr8vsSZMQNG48Qq2nkjPNXphd
+eq8lrlJjQ2RWszeNeHNPkT34JvHSe+6qsK+lV+iRUnIIviHhuHTp0mv30q9h
+amyM5Z9YIpz0BaW9A1QLvBDvG0L2Mg3pDpuQklgseNNzTiKj5DqZX3rP3SAz
+cV6YidSyo3D1X4mamprX7qWZZWeHWaZDobCdQc5gZ8S5+ZGOHoZ1wYnYELX5
+qXcf0rfVQlv8dbO36ha5xheFmVgSpsEEq4kGm+G1bp/DpNfv8SfjfvC3mUnu
+taVkb1AgaU0S8WZjI/GmUu/WE9AWkTOj8p5wzq3feQpuK6Lw7vt9sCxUbRAr
+TcRib8wZaoEB7/VBzx5vw8SoL5xt58Lf1R8Bi4OhickVvKHKbVgZSVZcCSxt
+nDFouAWGjpmGecvWIWn7foN6ncws4TzCGjMGj4XlgNEwetcIRr364sMP+sNk
+wDAMHjwK/f4wDMb9yOpvBpu5gXAJSEGAugJ+xC+Vd/7IaVjw8Ry4TfTA4hnL
+4emogOOsQNiT5bkkFf5BOxAQVoylyjIsjdUx6fVepIGPdyr8lmXL2hvAvd3U
+6yUrr6LbeAOZ9B6rrHp1b67hvF+dvcC93PsLe/dJ6l3UJW8x93boHce9knu3
+MOx17ybefGa9HtzLvXL0jpGbdzb3Mufdy70deicS79Tu61Vx7xvpXdiKN4p7
+ubc9bxX3diPvZ6/qzeHe1+ldJzvvHtl4fbm3A+954h3LvUx7K+Xl3ca9XfJa
+dW9vouy8Ohl5iyT22nfCW869BvVWSOx165p3K/dyr0y84a15yxnyxnPva/OG
+d1NvmXy8KuLdwr3tez/hXpa92aXSe+067z1Vd0NW3hsN33Fvl73LXvYGv+j1
+517u5V7u5d4312v+aRe9u2TkLede7uVe7uVe7u2U14d7O+G1aOFdxL1vsNfx
+mXfKz/T+XUbendzbBa+rHL0TuPeX91pxL/fK0zuce7m3Le8s7uXeN8hbyI7X
+oRt6Y7m3vezbXfbK3vCYBIN57WxsMW3QiJ/tXazYAidXD4N58/Ly8FHPXnAY
+Nq6T3pIXvEPGTIGnp6fBvPS5so6OjjDu2ZvMxcROe70VhZjqtBx9PuxrkGf/
+tmZ+r8fvMG7AaDiPc2nT67U6Fw6LVTAh3w9zc3NUVhruZy9amulsjLOwgNE7
+H8Col7HwvFfTQR/DdPBYfGQ8RHjea9+BZhg/YaLwuYZ8bnVbOb13L1zMzOFi
+MQluM1zhMHMhnFwC4ROUAt9wLQLjsqE7fkZqphB6vZQu8xE4djLWzHRBhGcY
+YkIyoE7YjYSsI0jMOwlNfg02644y8f/PFBUUwHn4KKwYb4MQezdEeEUgdm1m
+szfzMBK366EpOAFV7l7EaNZJzcUMW1u4DB+NlVZ2WOvgicglSuLNglpTgoSM
+aiTm6JGQXwv1ji9gbmlt8H2hZeg+amsyBKsnz0Kokw8ifaMRG9rs1WgPIXFb
+LfHq4bYqDuMN+IzttnLuzGn0+u3bmDl8DDztXKD0UxHvJqjji6FJP4jo9P1w
+9onA+717o7R4l6RWmqa715DkY4+po/+I3u/0xADjgRjY3xQmJmYwGTwKg03N
+MNLECKGLpuB+wzWpuXjy6D+ozoxEmdIdKb72UH9uh3gvsrybV+oye+ji3FFO
+FgtemuM5GsFbEeWOyhh37FG5o0rdvCqJk2Wvrg1vGVlNMvIe2RqJ/5LZYSHH
+OpiHCrJO5GukZj4L9ZaK3mj2vXfr9M1e5XPeOHa9dA8WvToZecvb8dbIzNtw
+WS8181mod3d7XvL7/UY29l4awRv5snfPU69wtjHkFTtEu15GzjYxNbmaVr2s
+dQcx9Ex+yctgdxAjeiuIt7KF9yhD3UFMe95ahvZeMS90Hhl4717Ut+ll6SwW
+Q/dguXlL2/Cy1B3EtOVlrTuIed67J/ZFL0tnsRjBGykfL+0Qh0mHeOZVs+2l
+oR2ipZfF7iDmJa+acW/Oy9eXxe4g5ngr3toC9vZeMbRDlNP9N/b/r4VY7A5i
+Gur0svLeJ3twSy+L3UGM4FXKxyt2NPqeX9XT126NDHYHMa15WT3baMTOQ+dB
+7JIse2mHOEI6hPCetQy8NCfImSxXbwXD3UEM7Tz0PRPaf49tYbc7iKGdR3iP
+h3j1DO+9Yo6LXvIaTs9w1xHTcFEPXVSzl+XuIIaeyeJrZNl4o9nvDmKe97Lc
+HcQ0PZ0Huj98z/hZQdMkdmCVPLy0QxzNihS8rJ/FYmrpGScjr367vLy1xHs8
+m/3uIIZ6T+5gf+8Vc0Jm3kbSIfQy8n5POrrcvLUy8zZeYr87iKGdhy65RG5e
+ek7I5azg4TF0/geGiWhQ
+     "], {{0, 229}, {44, 0}}, {0, 255},
+     ColorFunction->RGBColor],
+    BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+    Selectable->False],
+   BaseStyle->"ImageGraphics",
+   ImageSizeRaw->{44, 229},
+   PlotRange->{{0, 44}, {0, 229}}]], "Input"],
+ "Here, we have a visual of the rocket. It is assumed that there are no \
+outside forces on this system.\nObserving the rocket without air resistance \
+or gravity, the total force on the rocket is equal to the opposite force the \
+fuel is exerting. The fuel is exerting a force equal to the rate at which it \
+is being ejecting multiplied by the velocity at which it is being ejected ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      FractionBox["kg", "s"], "*", 
+      FractionBox["m", "s"]}], "=", 
+     FractionBox[
+      RowBox[{"kg", "*", "m"}], 
+      SuperscriptBox["s", "2"]]}], ")"}], TraditionalForm]]],
+ ". In our equation, this is written as Vg (velocity of gas) * \[Alpha] (rate \
+of gas). Then adding gravity, we add a negative force. This negative force is \
+equal to the mass of the rocket, multipled by gravity, multiplied by the \
+decay of gravity as height increases-- ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"kg", "*", 
+      FractionBox["m", 
+       SuperscriptBox["s", "2"]], "*", 
+      FractionBox["m", "m"]}], "=", 
+     FractionBox[
+      RowBox[{"kg", "*", "m"}], 
+      SuperscriptBox["s", "2"]]}], ")"}], TraditionalForm]]],
+ ". In our formula, this is written as mt (current mass of rocket) * g0 \
+(initial gravity) * ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     FractionBox["R", 
+      RowBox[{"R", "+", "h"}]], ")"}], "2"], TraditionalForm]]],
+ " (gravity is equal to the distance between two objects squared). Our \
+equation for force now contains Vg * \[Alpha] - mt * g0 ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"*", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      FractionBox["R", 
+       RowBox[{"R", "+", "h"}]], ")"}], "2"]}], TraditionalForm]]],
+ ". The last thing we need to include is air resistance. The air resistance \
+of an object is equal to the density of the air at starting position \
+(\[Rho]0) * lateral area of the rocket (area) * the decay of the density \
+which is equal to ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["\[ExponentialE]", 
+    RowBox[{"-", 
+     FractionBox["h", "H"]}]], TraditionalForm]]],
+ ", where H is the scale height, and h is the current height of the rocket \
+and * velocity squared ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    SuperscriptBox["v", "2"], ")"}], TraditionalForm]]],
+ " because the faster it is moving, the more and more particles it collides \
+with ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      FractionBox["kg", 
+       SuperscriptBox["m", "3"]], "*", 
+      SuperscriptBox["m", "2"], "*", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        FractionBox["m", "s"], ")"}], "2"]}], "=", 
+     FractionBox[
+      RowBox[{"kg", "*", "m"}], 
+      SuperscriptBox["s", "2"]]}], ")"}], TraditionalForm]]],
+ ". Since air resistance acts downward on the rocket, it is calculated as a \
+negative force. This gives us our final equation of force to be Vg * \[Alpha] \
+- mt * g0 ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"*", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      FractionBox["R", 
+       RowBox[{"R", "+", "h"}]], ")"}], "2"]}], TraditionalForm]]],
+ " - \[Rho]0 * area * ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["\[ExponentialE]", 
+    RowBox[{"-", 
+     FractionBox["h", "H"]}]], TraditionalForm]]],
+ " * ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["v", "2"], TraditionalForm]]],
+ ". I have showed that the force for each part is equal to ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{"kg", "*", "m"}], 
+    SuperscriptBox["s", "2"]], TraditionalForm]]],
+ " which is dimensionally correct for force, but since we are looking for the \
+DeltaV of the rocket, we divide the equation for force by the mass of the \
+rocket ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     FractionBox[
+      FractionBox[
+       RowBox[{"kg", "*", "m"}], 
+       SuperscriptBox["s", "2"]], "kg"], "=", 
+     FractionBox["m", 
+      SuperscriptBox["s", "2"]]}], ")"}], TraditionalForm]]],
+ ", giving us the acceleration at that specific time for the rocket. \
+Multiplying this by deltaT,  we find the change in the rocket\
+\[CloseCurlyQuote]s velocity at that instance (DeltaV = ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["m", "s"], TraditionalForm]]],
+ "). Therefore, our final equation is ",
+ Cell[BoxData[
+  RowBox[{"DeltaV", "=", 
+   RowBox[{
+    FractionBox[
+     RowBox[{
+      RowBox[{"Vg", "*", "\[Alpha]"}], "-", 
+      RowBox[{"mt", "*", "g0", "*", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         FractionBox["R", 
+          RowBox[{"R", "+", "h"}]], ")"}], "2"]}], "-", 
+      RowBox[{"\[Rho]0", "*", "area", "*", 
+       SuperscriptBox["\[ExponentialE]", 
+        FractionBox[
+         RowBox[{"-", "h"}], "H"]], "*", 
+       SuperscriptBox["v", "2"]}]}], "mt"], "*", "deltaT"}]}]],
+  CellChangeTimes->{{3.67016576912045*^9, 3.67016578724445*^9}, 
+    3.67016589278445*^9, {3.67016592863445*^9, 3.6701660061714497`*^9}, {
+    3.6704355422127047`*^9, 3.6704355520352664`*^9}, {3.6704380171512628`*^9, 
+    3.6704380376724367`*^9}, {3.670438521394104*^9, 3.670438523704236*^9}}],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.670587926469927*^9, 3.6705881899742746`*^9}, {
+  3.6705882807203484`*^9, 3.670588406109886*^9}, {3.670588448531128*^9, 
+  3.670589474427707*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["4) File Structure: Which function calls which?", "Section",
+ CellChangeTimes->{{3.6705488330526342`*^9, 3.6705488574900775`*^9}, {
+  3.6719330139149947`*^9, 3.6719330453334503`*^9}}],
+
+Cell["Our Project uses only one file.", "Text",
+ CellChangeTimes->{{3.670548867522081*^9, 3.670548877988127*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["5) Important Data Structures: Animations?", "Section",
+ CellChangeTimes->{{3.6705488882631545`*^9, 3.67054888881521*^9}, {
+  3.6705489205863867`*^9, 3.6705489340157294`*^9}, {3.671932991326155*^9, 
+  3.6719330120897913`*^9}}],
+
+Cell["\<\
+Our project uses no large or key data structures aside from some example \
+parameters we have for a default rocket. These were taken from the statistics \
+of the Saturn-V launch vehicle.\
+\>", "Text",
+ CellChangeTimes->{{3.6705489388152094`*^9, 3.6705489963129587`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["6) Project Approach (Needs Updated)", "Section",
+ CellChangeTimes->{{3.670549083067633*^9, 3.670549097225049*^9}, {
+  3.6705546693750677`*^9, 3.6705546704601765`*^9}, {3.670555765764696*^9, 
+  3.670555766861806*^9}, {3.670592433666435*^9, 3.670592433836384*^9}, {
+  3.6719330500914583`*^9, 3.671933087453524*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Written Overview", "Subsubsection",
+ CellChangeTimes->{{3.670550726743459*^9, 3.670550729553459*^9}}],
+
+Cell[TextData[{
+ "To accurately depict a rocket launch, we had to find a way to remain as \
+precise in our calculations that would still give near exact results while \
+maintaining efficiency in the code that does not overload ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ ". Equations that we use to achieve this are ",
+ Cell[BoxData[
+  RowBox[{
+   RowBox[{"DeltaV", "=", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{"Vg", "*", "\[Alpha]"}], "-", 
+       RowBox[{"mt", "*", "g0", "*", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          FractionBox["R", 
+           RowBox[{"R", "+", "h"}]], ")"}], "2"]}], "-", 
+       RowBox[{"\[Rho]0", "*", "area", "*", 
+        SuperscriptBox["\[ExponentialE]", 
+         FractionBox[
+          RowBox[{"-", "h"}], "H"]], "*", 
+        SuperscriptBox["v", "2"]}]}], "mt"], "*", "deltaT"}]}], ","}]],
+  CellChangeTimes->{{3.67016576912045*^9, 3.67016578724445*^9}, 
+    3.67016589278445*^9, {3.67016592863445*^9, 3.6701660061714497`*^9}, {
+    3.6704355422127047`*^9, 3.6704355520352664`*^9}, {3.6704380171512628`*^9, 
+    3.6704380376724367`*^9}, {3.670438521394104*^9, 3.670438523704236*^9}}],
+ " mt = m0 - \[Alpha] * Tcurrent, v += DeltaV, and h += v*deltaT. With these \
+equations, we can model and observe how the rocket is to behave in the air at \
+specific times. To do this, we use the Euler method--a first-order numerical \
+procedure for solving differential equations. The differential equation we \
+use for this is the equation for DeltaV. To find important values of the \
+rocket mt (mass at time t), v (velocity at time t), and h (height at time t), \
+we use DeltaV to calculate them. So, how this is done, we find the initial \
+DeltaV when mt = m0 (initial mass), v = 0, and h = 0 for a specific interval \
+(deltaT)* we choose to calculate. Upon obtaining this value for DeltaV, it is \
+used to update the velocity and height for the time of t += deltaT, and this \
+time is used to calculate the current mass of the rocket. With the updated \
+values of mass, velocity, and height for a new time, we calcualte DeltaV \
+again, but this time it yields results that are equal to DeltaV at t = \
+deltaT. We go through this process where mass, velocity, and height are \
+updated continuously until t = n * deltaT = run time chosen to module rocket, \
+where n is the number of times this process is repeated. This is all achieved \
+in a For loop--\n",
+ Cell[BoxData[
+  RowBox[{"For", "[", 
+   RowBox[{"Tcurrent", ",", 
+    RowBox[{"Tcurrent", "\[LessEqual]", "t"}], ",", 
+    RowBox[{"Tcurrent", "+=", "deltaT"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{"fuelcheck", ",", "\[IndentingNewLine]", 
+       RowBox[{"DeltaV", "=", 
+        RowBox[{
+         FractionBox[
+          RowBox[{
+           RowBox[{"Vg", "*", "\[Alpha]"}], "-", 
+           RowBox[{"mt", "*", "g0", "*", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              FractionBox["R", 
+               RowBox[{"R", "+", "h"}]], ")"}], "2"]}], "-", 
+           RowBox[{"\[Rho]0", "*", "area", "*", 
+            SuperscriptBox["\[ExponentialE]", 
+             FractionBox[
+              RowBox[{"-", "h"}], "H"]], "*", 
+            SuperscriptBox["v", "2"]}]}], "mt"], "*", "deltaT"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"DeltaV", "=", 
+        RowBox[{
+         FractionBox[
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "mt"}], "*", "g0", "*", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              FractionBox["R", 
+               RowBox[{"R", "+", "h"}]], ")"}], "2"]}], "-", 
+           RowBox[{"\[Rho]0", "*", "area", "*", 
+            SuperscriptBox["\[ExponentialE]", 
+             FractionBox[
+              RowBox[{"-", "h"}], "H"]], "*", 
+            SuperscriptBox["v", "2"]}]}], "mt"], "*", "deltaT"}]}]}], "]"}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"mt", "\[GreaterEqual]", 
+        RowBox[{"m0", "-", "fuel"}]}], ",", 
+       RowBox[{"mt", "=", 
+        RowBox[{"m0", "-", 
+         RowBox[{"\[Alpha]", "*", "Tcurrent"}]}]}], ",", 
+       RowBox[{"fuelcheck", "=", "False"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"v", "+=", "DeltaV"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"h", "+=", 
+      RowBox[{"v", "*", "deltaT"}]}], ";"}]}], "\[IndentingNewLine]", "]"}]],
+  CellChangeTimes->{{3.67016576912045*^9, 3.67016578724445*^9}, 
+    3.67016589278445*^9, {3.67016592863445*^9, 3.6701660061714497`*^9}, {
+    3.6704355422127047`*^9, 3.6704355520352664`*^9}, {3.6704380171512628`*^9, 
+    3.6704380376724367`*^9}, {3.670438521394104*^9, 3.670438523704236*^9}}],
+ "\nThe only variable not mentioned is fuelcheck. This is a boolean variable \
+that is set as True, but changes to False when the rocket runs out of fuel. \
+When this happens, it still evaluates DeltaV, but the force of the fuel is \
+negated because all the fuel is consumed.\n\n*The smaller the deltaT, the \
+more precise the final answer will be."
+}], "Text",
+ CellChangeTimes->{{3.6705896530355663`*^9, 3.670589965554815*^9}, {
+  3.670589998159075*^9, 3.6705908584981003`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["List of Important Functions:", "Subsubsection",
+ CellChangeTimes->{{3.670550745248459*^9, 3.670550755857459*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["1)\[CloseCurlyDoubleQuote]rocket\[CloseCurlyDoubleQuote]:", \
+"ItemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550809462459*^9}, {
+  3.670550933161459*^9, 3.670550938984459*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+This function (also previously titled \[OpenCurlyDoubleQuote]rocketLive\
+\[CloseCurlyDoubleQuote] is the calculation function. It calculates all of \
+the trajectory and returns current live data readouts for the particular \
+given time, t. The new program includes more options and further calculation \
+support following engine cutoff (A feature not included in the old \
+\[OpenCurlyDoubleQuote]rocketLive\[CloseCurlyDoubleQuote] program).\
+\>", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550944067459*^9}}],
+
+Cell["", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.6705509449734592`*^9}}]
+}, Open  ]],
+
+Cell["2) \[OpenCurlyDoubleQuote]interface\[CloseCurlyDoubleQuote]:", \
+"ItemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705509871604595`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+This function is the current interface for the program. It combines all of \
+the variables and display data into one, collective control panel. This \
+interface is only temporary however as a final interface that more closely \
+matches our project proposal design is in progress.\
+\>", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.670551058034459*^9}}],
+
+Cell["", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705510608474593`*^9}}]
+}, Open  ]],
+
+Cell["3) \[OpenCurlyDoubleQuote]SSRocket\[CloseCurlyDoubleQuote]", \
+"ItemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705510894244595`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Standing for \[OpenCurlyDoubleQuote]Single Stage Rocket\
+\[CloseCurlyDoubleQuote] the SSRocket function is the 3D model and simulation \
+of the rocket launch itself. This is a basic version, as the calculations are \
+written this will be expanded upon to include new features, specifically \
+trajectories and other functions that support staging. This function will be \
+called in the final interface when the single stage rocket option is selected.\
+\>", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705512052854595`*^9}, {3.670551347286459*^9, 
+  3.6705513720704594`*^9}}],
+
+Cell["", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705512060714593`*^9}}]
+}, Open  ]],
+
+Cell["4) \[OpenCurlyDoubleQuote]rocketGraph\[CloseCurlyDoubleQuote]", \
+"ItemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.670551214487459*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+This program is used to graph data from the calculations program into \
+comprehensive plots for better understanding the data. The final interface \
+will call this function such that specific plots can be displayed with the \
+function to show the data curves for the function.\
+\>", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705513200044594`*^9}}],
+
+Cell["", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.670551320836459*^9}}]
+}, Open  ]],
+
+Cell["5) \[OpenCurlyDoubleQuote]PrimaryInterface\[CloseCurlyDoubleQuote]", \
+"ItemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705513227494593`*^9}, {3.670551376746459*^9, 
+  3.6705514064074593`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+This function will be the main part of our final project. It will control all \
+of the functions in our final project. It will have a comprehensive menu \
+system that will allow the user to alter all the values in the program. The \
+display will consist of live data readouts, graphs graphically displaying the \
+complete data readouts, and a 3D model simulating the trajectory.\
+\>", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705513227494593`*^9}, {3.670551376746459*^9, 
+  3.6705514254524593`*^9}, {3.670551558026459*^9, 3.670551576494459*^9}, {
+  3.670551725454459*^9, 3.6705518016864595`*^9}, {3.670552528668459*^9, 
+  3.670552578559459*^9}}],
+
+Cell["", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705513227494593`*^9}, {3.670551376746459*^9, 
+  3.6705514254524593`*^9}, {3.670551558026459*^9, 3.670551576494459*^9}, {
+  3.670551725454459*^9, 3.6705518016864595`*^9}, {3.670552528668459*^9, 
+  3.670552579612459*^9}}]
+}, Open  ]],
+
+Cell["6) Multistagerocket", "ItemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705513227494593`*^9}, {3.670551376746459*^9, 
+  3.6705514254524593`*^9}, {3.670551558026459*^9, 3.670551576494459*^9}, {
+  3.670551725454459*^9, 3.6705518016864595`*^9}, {3.670552528668459*^9, 
+  3.6705525980714593`*^9}}],
+
+Cell["\<\
+This function/functions will display the 3D animation for various stage \
+configurations of rockets. This is a future function, which has yet to be \
+written. It will be in the final part of our project.\
+\>", "SubitemParagraph",
+ CellChangeTimes->{{3.670550776230459*^9, 3.670550949001459*^9}, {
+  3.670550983076459*^9, 3.6705513227494593`*^9}, {3.670551376746459*^9, 
+  3.6705514254524593`*^9}, {3.670551558026459*^9, 3.670551576494459*^9}, {
+  3.670551725454459*^9, 3.6705518016864595`*^9}, {3.670552528668459*^9, 
+  3.6705526066044593`*^9}, {3.670552959054459*^9, 3.670552966746459*^9}, {
+  3.670553738771459*^9, 3.6705537469174595`*^9}, {3.6705540807302732`*^9, 
+  3.670554097004406*^9}, {3.6705541898868046`*^9, 3.6705542053598986`*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell["7) Externally Used Code?", "Section",
+ CellChangeTimes->{{3.670549010517379*^9, 3.6705490116064873`*^9}, {
+  3.670549066353962*^9, 3.670549076323959*^9}, {3.6705546754086714`*^9, 
+  3.6705546767338037`*^9}, {3.670555780119131*^9, 3.6705557805031695`*^9}, {
+  3.671933155188843*^9, 3.671933165594061*^9}}],
+
+Cell["8) Description of Limitations", "Section",
+ CellChangeTimes->{{3.6719331858428965`*^9, 3.6719332038141284`*^9}}],
+
+Cell["9) References: Emslie, Wikipedia, and...?", "Section",
+ CellChangeTimes->{{3.671933214936948*^9, 3.67193323332938*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["10) Signed Statements", "Section",
+ CellChangeTimes->{{3.670549102572583*^9, 3.670549125990925*^9}, {
+  3.6705491621605415`*^9, 3.670549163979724*^9}, {3.670592508696919*^9, 
+  3.6705925096886215`*^9}, {3.6719332372449875`*^9, 3.6719332376973877`*^9}}],
+
+Cell["Robert Bosh Signed Statement", "Subsection",
+ CellChangeTimes->{{3.6705491379751234`*^9, 3.670549146264952*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1366, 686},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.1 for Microsoft Windows (64-bit) (March 23, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 190, 2, 101, "Title"],
+Cell[CellGroupData[{
+Cell[795, 28, 112, 1, 72, "Chapter"],
+Cell[CellGroupData[{
+Cell[932, 33, 174, 2, 70, "Section"],
+Cell[1109, 37, 865, 18, 220, "Text"]
+}, Open  ]],
+Cell[1989, 58, 213, 3, 70, "Section"],
+Cell[CellGroupData[{
+Cell[2227, 65, 260, 3, 56, "Section"],
+Cell[2490, 70, 9103, 216, 585, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11630, 291, 188, 2, 70, "Section"],
+Cell[11821, 295, 113, 1, 30, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11971, 301, 231, 3, 70, "Section"],
+Cell[12205, 306, 280, 5, 30, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12522, 316, 319, 4, 70, "Section"],
+Cell[CellGroupData[{
+Cell[12866, 324, 107, 1, 39, "Subsubsection"],
+Cell[12976, 327, 5176, 108, 517, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18189, 440, 119, 1, 39, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[18333, 445, 199, 3, 21, "ItemParagraph"],
+Cell[CellGroupData[{
+Cell[18557, 452, 542, 8, 38, "SubitemParagraph"],
+Cell[19102, 462, 96, 1, 21, "SubitemParagraph"]
+}, Open  ]],
+Cell[19213, 466, 204, 3, 21, "ItemParagraph"],
+Cell[CellGroupData[{
+Cell[19442, 473, 430, 7, 38, "SubitemParagraph"],
+Cell[19875, 482, 145, 2, 21, "SubitemParagraph"]
+}, Open  ]],
+Cell[20035, 487, 202, 3, 21, "ItemParagraph"],
+Cell[CellGroupData[{
+Cell[20262, 494, 653, 10, 55, "SubitemParagraph"],
+Cell[20918, 506, 145, 2, 21, "SubitemParagraph"]
+}, Open  ]],
+Cell[21078, 511, 203, 3, 21, "ItemParagraph"],
+Cell[CellGroupData[{
+Cell[21306, 518, 429, 7, 38, "SubitemParagraph"],
+Cell[21738, 527, 143, 2, 21, "SubitemParagraph"]
+}, Open  ]],
+Cell[21896, 532, 261, 4, 21, "ItemParagraph"],
+Cell[CellGroupData[{
+Cell[22182, 540, 728, 11, 38, "SubitemParagraph"],
+Cell[22913, 553, 342, 5, 21, "SubitemParagraph"]
+}, Open  ]],
+Cell[23270, 561, 360, 5, 21, "ItemParagraph"],
+Cell[23633, 568, 753, 11, 21, "SubitemParagraph"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[24425, 584, 310, 4, 70, "Section"],
+Cell[24738, 590, 118, 1, 56, "Section"],
+Cell[24859, 593, 125, 1, 56, "Section"],
+Cell[CellGroupData[{
+Cell[25009, 598, 258, 3, 56, "Section"],
+Cell[25270, 603, 118, 1, 49, "Subsection"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
